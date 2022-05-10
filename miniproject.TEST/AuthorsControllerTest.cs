@@ -5,22 +5,13 @@ using miniproject.DAL.repository;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace miniproject.TEST
 {
     public class AuthorsControllerTest
     {
-        private List<Author> authorlist = new List<Author>()
-            {
-                new Author{Id = 1, Age = 12, Name="Hans", IsAlive=true, Password="1234"},
-                new Author{Id = 2, Age = 12, Name="Gert", IsAlive=true, Password="1234"},
-                new Author{Id = 3, Age = 12, Name="Gerda", IsAlive=true, Password="1234"},
-                new Author{Id = 4, Age = 12, Name="Erik", IsAlive=true, Password="1234"}
-            };
+        private List<Author> authorlist = DummyData.Authorlist;
 
         // System under test
         private readonly AuthorsController _sut;
@@ -202,3 +193,6 @@ namespace miniproject.TEST
 
     }
 }
+
+
+// lav to tests uden mock

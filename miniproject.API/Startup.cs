@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,7 +32,9 @@ namespace miniproject.API
             services.AddScoped<IAuthorRepo, AuthorRepo>();
             services.AddScoped<IBookRepo, BookRepo>();
 
-            services.AddDbContext<AbContext>();
+            services.AddDbContext<AbContext>(
+                x => x.UseSqlServer(Configuration.GetConnectionString("Default"))); 
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

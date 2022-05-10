@@ -11,11 +11,8 @@ namespace miniproject.DAL.Database
 {
     public class AbContext: DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=LAPTOP-DLG4VOAV;Database=abdb2; Trusted_Connection=True");
-        }
-
+        public AbContext() { }
+        public AbContext(DbContextOptions<AbContext> options) : base(options) { }        
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }
     }

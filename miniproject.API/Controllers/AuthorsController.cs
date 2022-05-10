@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using miniproject.DAL.Database;
 using miniproject.DAL.Models;
 using miniproject.DAL.repository;
 
@@ -71,14 +70,7 @@ namespace miniproject.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AuthorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return Ok(author);
-                }
+                return !AuthorExists(id)? NotFound(): Ok(author);
             } 
                 return Ok(author);
         }
@@ -89,16 +81,8 @@ namespace miniproject.API.Controllers
         public async Task<IActionResult> PostAuthor(Author author)
         {
             var result = await repo.createAuthorAsync(author);
-            if (result != null)
-            {
-                return Ok(author);
-            }
-            else 
-            { // more
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
 
-            //return author;
+            return result != null? Ok(author): StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         // DELETE: api/Authors/5
