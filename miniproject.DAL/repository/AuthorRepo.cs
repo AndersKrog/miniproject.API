@@ -28,7 +28,11 @@ namespace miniproject.DAL.repository
         }
         public async Task<List<Author>> getAuthorsAsync()
         {
-            List<Author> authors = await myContext.Author.ToListAsync();
+            //List<Author> authors = await myContext.Author.ToListAsync();
+            
+            List<Author> authors = await myContext.Author.Include(author =>
+            author.Books).ToListAsync();
+            
             return authors;
         }
         public async Task<Author> getAuthorAsync(int Id) 
@@ -45,17 +49,21 @@ namespace miniproject.DAL.repository
             return result != 0 ? author : null;
         }
         public async Task<Author> updateAuthorAsync(int Id, Author author) {
+            int result = 0;
 
-            myContext.Entry(author).State = EntityState.Modified;
-
-            var result = await myContext.SaveChangesAsync();
-            return result != 0 ? author : null;
+            if (authorExists(Id) == true)
+            {
+                myContext.Entry(author).State = EntityState.Modified;
+                result = await myContext.SaveChangesAsync();
+            }
+            return result == 0 ? null : author;
         }
         public async Task<Author> deleteAuthorAsync(int Id) {
 
             var author = await getAuthorAsync(Id);
             if (author != null)
             {
+                myContext.Author.Remove(author);
                 var result = await myContext.SaveChangesAsync();
                 return result != 0? author : null;
             }

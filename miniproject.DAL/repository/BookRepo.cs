@@ -47,11 +47,14 @@ namespace miniproject.DAL.repository
         }
         public async Task<Book> updateBookAsync(int Id, Book book)
         {
+            int result = 0;
 
-            myContext.Entry(book).State = EntityState.Modified;
-
-            var result = await myContext.SaveChangesAsync();
-            return result != 0 ? book : null;
+            if (bookExists(Id) == true)
+            {
+                myContext.Entry(book).State = EntityState.Modified;
+                result = await myContext.SaveChangesAsync();
+            }
+            return result == 0 ? null : book;
         }
         public async Task<Book> deleteBookAsync(int Id)
         {
@@ -59,6 +62,7 @@ namespace miniproject.DAL.repository
             var book = await getBookAsync(Id);
             if (book != null)
             {
+                myContext.Book.Remove(book);
                 var result = await myContext.SaveChangesAsync();
                 return result != 0 ? book : null;
             }

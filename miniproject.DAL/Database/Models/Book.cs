@@ -1,4 +1,5 @@
-﻿using System;
+﻿using miniproject.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,8 @@ namespace miniproject.DAL.Database.Models
         public int Wordcount { get; set; }
         public bool Binding { get; set; }
         public DateTime Releasedate { get; set; }
+        public int AuthorId { get; set; }
+        // kun for bekvemmelighed
+        //public Author author { get; set; }
     }
 }

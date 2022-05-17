@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using miniproject.DAL.Database.Models;
+using miniproject.DAL.Models;
 using miniproject.DAL.repository;
 
 namespace miniproject.API.Controllers
@@ -64,15 +65,9 @@ namespace miniproject.API.Controllers
             {
                 return BadRequest();
             }
-            try
-            {
-                await repo.updateBookAsync(id, book);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return !BookExists(id) ? NotFound() : Ok(book);
-            }
-            return Ok(book);
+            var result = await repo.updateBookAsync(id, book);
+
+            return result != null ? Ok(result) : NotFound();
         }
 
         // POST: api/Books

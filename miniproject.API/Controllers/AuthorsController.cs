@@ -64,15 +64,9 @@ namespace miniproject.API.Controllers
             {
                 return BadRequest();
             }
-            try
-            {
-                await repo.updateAuthorAsync(id,author);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return !AuthorExists(id)? NotFound(): Ok(author);
-            } 
-                return Ok(author);
+            var result = await repo.updateAuthorAsync(id,author);
+
+            return result != null ? Ok(result) : NotFound();
         }
 
         // POST: api/Authors

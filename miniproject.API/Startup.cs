@@ -29,6 +29,17 @@ namespace miniproject.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("corsrules",
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
+            });
+
             services.AddScoped<IAuthorRepo, AuthorRepo>();
             services.AddScoped<IBookRepo, BookRepo>();
 
@@ -40,6 +51,10 @@ namespace miniproject.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "miniproject.API", Version = "v1" });
             });
+
+            // for at undgå uendelige loops, når tabeller joines.
+            //services.AddControllers().AddJsonOptions(x =>
+            //x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +70,8 @@ namespace miniproject.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("corsrules");
 
             app.UseAuthorization();
 
