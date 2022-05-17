@@ -1,10 +1,11 @@
 ﻿using miniproject.DAL.Database.Models;
+using miniproject.DAL.repository;
 using System;
 using System.Collections.Generic;
 
 namespace miniproject.DAL.Models
 {
-    public class Author
+    public class Author : Ientity
     {
         public int Id { get; set; }
         public string Name { get; set; }

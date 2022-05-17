@@ -15,11 +15,10 @@ namespace miniproject.API.Controllers
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorRepo repo;
-        public AuthorsController(IAuthorRepo a) 
+        public AuthorsController(IAuthorRepo a)
         {
             repo = a;
         }
-
         // GET: api/Authors
         [HttpGet]
         public async Task<ActionResult> GetAuthors()

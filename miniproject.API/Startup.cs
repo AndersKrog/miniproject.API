@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using miniproject.DAL.Database;
+using miniproject.DAL.Models;
 using miniproject.DAL.repository;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,10 @@ namespace miniproject.API
 
             services.AddScoped<IAuthorRepo, AuthorRepo>();
             services.AddScoped<IBookRepo, BookRepo>();
+
+            //services.AddScoped<IGenericRepo<Author>, GenericRepo<Author>();
+
+            services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
 
             services.AddDbContext<AbContext>(
                 x => x.UseSqlServer(Configuration.GetConnectionString("Default"))); 

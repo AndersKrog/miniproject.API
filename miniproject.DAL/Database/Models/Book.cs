@@ -1,4 +1,5 @@
 ﻿using miniproject.DAL.Models;
+using miniproject.DAL.repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace miniproject.DAL.Database.Models
 {
-    public class Book
+    public class Book : Ientity
     {
         public int Id { get; set; }
         public string Title { get; set; }
